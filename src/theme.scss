@@ -1,0 +1,108 @@
+
+@use '@angular/material' as mat;
+@include mat.core();
+
+$forest-green-palette: (
+  50 : #e6ece6,
+    100 : #c0cfc0,
+    200 : #96af96,
+    300 : #6b8f6c,
+    400 : #4c774d,
+    500 : #2c5f2d,
+    600 : #275728,
+    700 : #214d22,
+    800 : #1b431c,
+    900 : #103211,
+    A100 : #70ff70,
+    A200 : #3dff3d,
+    A400 : #0aff0a,
+    A700 : #00f000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+  )
+);
+$moss-green-palette: (
+  50 : #f3f7ec,
+    100 : #e0ebd0,
+    200 : #cbdeb1,
+    300 : #b6d091,
+    400 : #a7c67a,
+    500 : #97bc62,
+    600 : #8fb65a,
+    700 : #84ad50,
+    800 : #7aa546,
+    900 : #699734,
+    A100 : #f1ffe1,
+    A200 : #d8ffae,
+    A400 : #bfff7b,
+    A700 : #b3ff62,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+  )
+);
+$crimson-palette: (
+  50: #ffebef,
+  100: #ffcdc5,
+  200: #f0999f,
+  300: #e77179,
+  400: #f24e58,
+  500: #f83a40,
+  600: #e9313e,
+  700: #d72638,
+  800: #ca1e30,
+  900: #bb0d24,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+$my-primary: mat.define-palette($forest-green-palette, 700, 300, 900);
+$my-accent: mat.define-palette($forest-green-palette, 300, 100, 500);
+$my-warn: mat.define-palette($crimson-palette, 700);
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  )
+));
+@include mat.all-component-themes($my-theme);
+
+
+
+
+
