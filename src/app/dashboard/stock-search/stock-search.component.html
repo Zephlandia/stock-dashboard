@@ -1,0 +1,14 @@
+<p>stock-search works!</p>
+
+
+<!-- <div *ngIf="quote$ | async as quote">
+
+  {{quote['Global Quote']['01. symbol']}}
+
+</div> -->
+
+<div *ngIf="stocks$ | async as stocks">
+
+  {{stocks.bestMatches[0]['1. symbol']}}
+
+</div>

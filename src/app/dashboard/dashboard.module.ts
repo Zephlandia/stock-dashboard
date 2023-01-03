@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 import { SharedModule } from '../shared/shared.module';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
+import { StockSearchComponent } from './stock-search/stock-search.component';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    DashboardMainComponent
+    DashboardMainComponent,
+    StockSearchComponent
   ],
   imports: [
-    CommonModule,
+    // CommonModule,
     SharedModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    DashboardRoutingModule
   ]
 })
 export class DashboardModule { }

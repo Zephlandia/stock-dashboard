@@ -9,6 +9,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { StockKeyInterceptor } from './interceptors/stock-key.interceptor';
 
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +19,8 @@ import { StockKeyInterceptor } from './interceptors/stock-key.interceptor';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    AppRoutingModule
   ],
   providers: [
     HttpClientModule,

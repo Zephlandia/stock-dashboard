@@ -25,5 +25,4 @@ export class StockKeyInterceptor implements HttpInterceptor {
     });
   }
 
-
 }
