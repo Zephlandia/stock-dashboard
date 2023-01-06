@@ -9,7 +9,7 @@ const routes: Routes = [
     component: StockSearchComponent
   },
   {
-    path: 'dashboard',
+    path: 'dashboard/:symbol',
     component: DashboardMainComponent
   }
 ];

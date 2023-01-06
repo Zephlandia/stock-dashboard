@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
-import { SharedModule } from '../shared/shared.module';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { StockSearchComponent } from './stock-search/stock-search.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -14,10 +15,12 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     StockSearchComponent
   ],
   imports: [
-    // CommonModule,
-    SharedModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    MatIconModule
   ]
 })
 export class DashboardModule { }

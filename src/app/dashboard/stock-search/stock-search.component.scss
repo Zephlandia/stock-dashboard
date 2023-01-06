@@ -1,0 +1,32 @@
+.autocomplete-field {
+  min-width: 150px;
+  max-width: 450px;
+  width: 100%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.submit {
+  margin-left: 10px;
+}
+
+.submit-container {
+  display: flex;
+  align-items: center;
+}

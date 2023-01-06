@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Match, Quote, Stock } from '../models/stock.model';
 import { StockService } from '../stock-service/stock.service';
 
@@ -10,41 +12,79 @@ import { StockService } from '../stock-service/stock.service';
 })
 export class StockSearchComponent {
 
-  stocks$: Observable<Match> | undefined;
+  stocks$: Observable<Match> = new Observable<Match>();
   quote$: Observable<Quote> | undefined;
 
-  constructor(private stockService: StockService) {}
+  filteredStocks: Stock[] = [];
 
-  ngOnInit(): void {
-      console.log('on init');
+  searchMoviesCtrl = new FormControl();
+  isLoading = false;
+  errorMsg!: string;
+  minLengthTerm = 3;
+  spinnerDiameter = 25;
+  selectedSymbol!: string;
+  showClearBtn = false;
+  notSelected = false;
 
-      // this.quote$ = this.stockService.getStockQuote('IBM');
-      // this.quote$.subscribe({
-      //   next: (result: Quote) => {
-      //     console.log(result);
-      //     console.log(result['Global Quote']['01. symbol']);
-      //   },
-      //   error: (error) => {
-      //     console.log(error);
-      //   }
-      // });
+  constructor(private stockService: StockService, private router: Router) {
 
-      this.stocks$ = this.stockService.getStockSearch('tesco');
-      this.stocks$.subscribe({
-        next: (result: Match) => {
-          console.log(result);
-          console.log(result.bestMatches[0]);
-        },
-        error: (error) => {
-          console.log(error);
+    this.searchMoviesCtrl.valueChanges
+    .pipe(
+      filter(result => {
+
+        this.notSelected = false;
+
+        if(result != null && result.length > 0) {
+          this.showClearBtn = true;
+
+          if(result.length > 2) {
+            this.errorMsg = "";
+            this.filteredStocks = [];
+            this.isLoading = true;
+            this.selectedSymbol = '';
+          }
         }
-      });
+        return result !== null && result.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      switchMap(value => this.stockService.getStockSearch(value as string)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((result: any) => {
+      if (result == undefined) {
+        this.errorMsg = result['Error'];
+        this.filteredStocks = [];
+      } else {
+        this.errorMsg = "";
+        this.filteredStocks = result.bestMatches;
+      }
+    });
+  }
 
-      // this.stockService.getTimeSeriesAdjusted('IBM', TimePeriodAdjustedEnum.daily);
-      // this.stockService.getCompanyInfo('IBM');
-      // console.log(this.stockService.getStockSearch('tesco'));
+  ngOnInit(): void { }
 
-      // console.log(this.stocks$);
+  submit() {
+    if(this.selectedSymbol) {
+      this.router.navigate(['dashboard', this.searchMoviesCtrl.value]);
+    }
+    else{
+      this.notSelected = true;
+    }
+  }
+
+  onSelected() {
+    this.selectedSymbol = this.searchMoviesCtrl.value;
+  }
+
+  clear() {
+    this.filteredStocks = [];
+    this.searchMoviesCtrl.setValue(null);
   }
 
 
