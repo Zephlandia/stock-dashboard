@@ -1,0 +1,44 @@
+mat-card {
+  margin: 20px;
+}
+
+.text-muted {
+  opacity: 0.5
+}
+
+.item {
+  margin-top: 5px;
+}
+
+.description {
+  min-width:300px;
+}
+
+.item-group-parent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  column-gap: 15px;
+}
+
+.item-group-child {
+  flex: 1 1 25%;
+  margin-bottom: 20px;
+}
+
+.item-group-description {
+  flex: 2 1 45%;
+  margin-bottom: 20px;
+}
+
+h3 {
+  opacity: 0.8;
+}
+
+.graph-header-parent {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+

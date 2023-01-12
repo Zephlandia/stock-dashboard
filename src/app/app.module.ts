@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { StockKeyInterceptor } from './interceptors/stock-key.interceptor';
 
-
 @NgModule({
   declarations: [
     AppComponent

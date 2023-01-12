@@ -12,13 +12,6 @@ export class StockService {
 
   constructor(private http: HttpClient) { }
 
-  // Todo:
-  // [ ] Add a note in the repo of GitHub that this is where the api key goes. I didn't want to add a key vault to this.
-  // Then when publishing this to firebase, just manually put it during the build and then remove it.
-
-  // [ ] Make page responsive and look good on mobile
-  // [ ] Add loading icons while waiting for api calls to finish
-
   // https://www.alphavantage.co/documentation/
   // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo
   getStockQuote(symbol: string): Observable<Quote> {

@@ -1,1 +1,111 @@
-<p>dashboard-main works!</p>
+
+<div>
+  <mat-card>
+    <mat-card-header>
+      <h1>{{symbol}}
+        <span *ngIf="company"> - {{company.Name}}</span>
+      </h1>
+    </mat-card-header>
+    <!-- <mat-card-subtitle *ngIf="company">
+      {{company.Description}}
+    </mat-card-subtitle> -->
+
+    <mat-card-content class="item-group-parent" *ngIf="company">
+
+      <!-- Ratios -->
+      <div class="item-group-child">
+        <h3>Company Ratios</h3>
+
+        <div class="item">
+          <span class="text-muted">PE Ratio:</span>
+          {{company.PERatio}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">EPS:</span>
+          {{company.EPS}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Book Value:</span>
+          {{company.BookValue}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Profit Margin:</span>
+          {{company.ProfitMargin}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Revenue Per Share:</span>
+          {{company.RevenuePerShareTTM}}
+        </div>
+      </div>
+
+      <!-- Stock Info -->
+      <div class="item-group-child">
+        <h3>Stock Info</h3>
+
+        <div class="item">
+          <span class="text-muted">Open:</span>
+          {{quote["02. open"]}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">High:</span>
+          {{quote["03. high"]}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Low:</span>
+          {{quote["04. low"]}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Price:</span>
+          {{quote["05. price"]}}
+        </div>
+
+        <div class="item">
+          <span class="text-muted">Volume:</span>
+          {{quote["06. volume"]}}
+        </div>
+      </div>
+
+      <!-- Company Description -->
+      <div class="item-group-description">
+        <h3>Description</h3>
+
+        <div class="item description" *ngIf="company">
+          {{company.Description}}
+        </div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <mat-card>
+
+    <mat-card-header >
+      <div class="graph-header-parent">
+        <h1>{{graphTitle}}</h1>
+
+        <mat-button-toggle-group name="timeSeries" aria-label="Time Series" [formControl]="timeSeries">
+          <mat-button-toggle value="daily">Daily</mat-button-toggle>
+          <mat-button-toggle value="weekly">Weekly</mat-button-toggle>
+          <mat-button-toggle value="monthly">Monthly</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div echarts [options]="options" class="demo-chart"></div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

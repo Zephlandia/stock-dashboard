@@ -1,9 +1,13 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TimePeriodAdjustedEnum } from '../models/stock-enums.model';
-import { Company, SeriesData } from '../models/stock.model';
+import { Company, GlobalQuote, Quote, SeriesData } from '../models/stock.model';
 import { StockService } from '../stock-service/stock.service';
+import { EChartsOption } from 'echarts';
+import { GraphService } from '../graph-service/graph.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -12,38 +16,54 @@ import { StockService } from '../stock-service/stock.service';
 })
 export class DashboardMainComponent implements OnInit {
 
-  company$: Observable<Company> | undefined;
-  timeSeries$: Observable<SeriesData> | undefined;
+  symbol: string = '';
+  company: Company = new Company();
+  quote: GlobalQuote = new GlobalQuote();
+  graphTitle: string = 'Daily Adjusted Time Series';
+  options: EChartsOption = {};
 
+  timeSeries:FormControl = new FormControl('');
 
-  constructor(private stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private graphService: GraphService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-      console.log('on init');
 
-      // this.stockService.getStockQuote('IBM');
-      // this.stockService.getTimeSeriesAdjusted('IBM', TimePeriodAdjustedEnum.daily);
-      // this.stockService.getCompanyInfo('IBM');
+    this.timeSeries.setValue('daily');
 
-      // this.company$ = this.stockService.getCompanyInfo('IBM');
-      // this.company$.subscribe({
-      //   next: (result: Company) => {
-      //     console.log(result);
-      //   },
-      //   error: (error) => {
-      //     console.log(error);
-      //   }
-      // });
+    this.route.paramMap.subscribe((params: ParamMap) => {
+        this.symbol = params.get('symbol') || '';
+    });
 
-      this.timeSeries$ = this.stockService.getTimeSeriesAdjusted('IBM', TimePeriodAdjustedEnum.daily);
-      this.timeSeries$.subscribe({
-        next: (result: SeriesData) => {
-          console.log(result);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    // this.stockService.getCompanyInfo(this.symbol).subscribe({
+    //   next: (result: Company) => {
+    //     this.company = result;
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   }
+    // });
+
+    // this.stockService.getStockQuote(this.symbol).subscribe({
+    //   next: (result: Quote) => {
+    //     this.quote = result["Global Quote"];
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   }
+    // });
+
+
+    // this.stockService.getTimeSeriesAdjusted(this.symbol, TimePeriodAdjustedEnum.daily).subscribe({
+    //   next: (result: SeriesData) => {
+    //     this.options = this.graphService.getGraphData(result, TimePeriodAdjustedEnum.daily);
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   }
+    // });
 
   }
 

@@ -6,6 +6,7 @@ import { StockSearchComponent } from './stock-search/stock-search.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -20,7 +21,10 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     AngularMaterialModule,
     DashboardRoutingModule,
-    MatIconModule
+    MatIconModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ]
 })
 export class DashboardModule { }
