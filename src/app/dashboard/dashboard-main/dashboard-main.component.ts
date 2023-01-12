@@ -17,12 +17,15 @@ import { FormControl } from '@angular/forms';
 export class DashboardMainComponent implements OnInit {
 
   symbol: string = '';
-  company: Company = new Company();
-  quote: GlobalQuote = new GlobalQuote();
+  company: Company | undefined;
+  quote: GlobalQuote | undefined;
   graphTitle: string = 'Daily Adjusted Time Series';
   options: EChartsOption = {};
-
   timeSeries:FormControl = new FormControl('');
+  graphLoading: boolean = false;
+  companyLoading: boolean = false;
+  quoteLoading: boolean = false;
+  spinnerDiameter: number = 25;
 
   constructor(
     private stockService: StockService,
@@ -31,40 +34,59 @@ export class DashboardMainComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.timeSeries.setValue('daily');
-
     this.route.paramMap.subscribe((params: ParamMap) => {
         this.symbol = params.get('symbol') || '';
     });
 
-    // this.stockService.getCompanyInfo(this.symbol).subscribe({
-    //   next: (result: Company) => {
-    //     this.company = result;
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   }
-    // });
+    this.companyLoading = true;
+    this.stockService.getCompanyInfo(this.symbol).subscribe({
+      next: (result: Company) => {
+        this.company = result;
+        this.companyLoading = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.companyLoading = false;
+      }
+    });
 
-    // this.stockService.getStockQuote(this.symbol).subscribe({
-    //   next: (result: Quote) => {
-    //     this.quote = result["Global Quote"];
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   }
-    // });
+    this.quoteLoading = true;
+    this.stockService.getStockQuote(this.symbol).subscribe({
+      next: (result: Quote) => {
+        this.quote = result["Global Quote"];
+        this.quoteLoading = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.quoteLoading = false;
+      }
+    });
 
+    this.timeSeries.setValue('daily');
+    this.getTimeSeriesData(TimePeriodAdjustedEnum.daily);
+  }
 
-    // this.stockService.getTimeSeriesAdjusted(this.symbol, TimePeriodAdjustedEnum.daily).subscribe({
-    //   next: (result: SeriesData) => {
-    //     this.options = this.graphService.getGraphData(result, TimePeriodAdjustedEnum.daily);
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   }
-    // });
+  updateTimeSeries() {
+    if(this.timeSeries.value === 'daily')
+      this.getTimeSeriesData(TimePeriodAdjustedEnum.daily);
+    else if(this.timeSeries.value === 'weekly')
+      this.getTimeSeriesData(TimePeriodAdjustedEnum.weekly);
+    else
+      this.getTimeSeriesData(TimePeriodAdjustedEnum.monthly);
+  }
 
+  getTimeSeriesData(timeSeries: TimePeriodAdjustedEnum) {
+    this.graphLoading = true;
+      this.stockService.getTimeSeriesAdjusted(this.symbol, timeSeries).subscribe({
+      next: (result: SeriesData) => {
+        this.options = this.graphService.getGraphData(result, timeSeries);
+        this.graphLoading = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.graphLoading = false;
+      }
+    });
   }
 
 
