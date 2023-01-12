@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
 
+Note: This was build using the free API version of AlphaVantage (https://www.alphavantage.co). This means it is limited to 5 api calls per minute, which can affect the data being returned if the application makes several fast subsequent calls or page refreshes.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
